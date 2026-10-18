@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Scoring System - Kuliah 12</title>
-    <!-- Background loading for confetti so it never blocks the webpage -->
-    <script defer src="https://jsdelivr.net"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -34,7 +32,7 @@
             margin: 0;
         }
         
-        /* Scoreboard Styling */
+        /* Scoreboard Grid */
         .scoreboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -52,23 +50,18 @@
             font-weight: bold;
             color: #fff;
             box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
-            transition: all 0.2s ease;
-        }
-        .team-score-card.bounce {
-            transform: scale(1.1);
         }
         .team-score-card h3 {
             margin: 0 0 10px 0;
             font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
         .team-score-card .score {
             font-size: 2rem;
             margin: 0;
         }
 
-        /* Team Colors Mapped to Document Styles */
+        /* Warna Kumpulan */
         .t1 { background-color: #d1a3d1; color: #4a144a !important; }
         .t2 { background-color: #2ecc71; color: #0f4021 !important; }
         .t3 { background-color: #e74c3c; color: #56140d !important; }
@@ -78,7 +71,7 @@
         .t7 { background-color: #f1c40f; color: #544403 !important; }
         .t8 { background-color: #bdc3c7; color: #2c3e50 !important; }
 
-        /* Controls Panel */
+        /* Panel Kawalan */
         .action-panel {
             display: flex;
             justify-content: center;
@@ -92,15 +85,12 @@
             font-weight: bold;
             font-size: 1rem;
             border: none;
-            transition: all 0.2s;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .btn-end { background-color: #2c3e50; color: white; }
-        .btn-end:hover { background-color: #1a252f; transform: translateY(-2px); }
         .btn-reset { background-color: #e74c3c; color: white; }
-        .btn-reset:hover { background-color: #c0392b; transform: translateY(-2px); }
 
-        /* Main Setup Grid */
+        /* Butang Pelajar */
         .grid-title {
             color: #34495e;
             border-bottom: 2px solid #bdc3c7;
@@ -124,19 +114,11 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.2s ease;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-        .student-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        .student-btn:hover {
             border-color: #3498db;
-        }
-        .student-btn:active:not(:disabled) { transform: translateY(0); }
-        .student-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
+            background-color: #f8fafc;
         }
         .student-btn .team-badge {
             align-self: flex-start;
@@ -147,7 +129,7 @@
             font-weight: bold;
         }
 
-        /* Results Layout */
+        /* Skrin Keputusan */
         .results-panel {
             display: none;
             background: white;
@@ -180,13 +162,21 @@
             border-radius: 8px;
             font-weight: bold;
             font-size: 1.2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         .rank-badge {
             background: rgba(0,0,0,0.15);
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.9rem;
+        }
+
+        /* Kesan Confetti Tempatan */
+        .confetti {
+            position: fixed; width: 10px; height: 10px; top: -10px; z-index: 999;
+            animation: fall 3s linear infinite;
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
         }
     </style>
 </head>
@@ -198,7 +188,7 @@
         <p class="credit">by 何 afikuza.</p>
     </div>
 
-    <!-- Scoreboard View -->
+    <!-- Paparan Markah -->
     <div class="scoreboard">
         <div class="team-score-card t1" id="card-1"><h3>Team 1</h3><p class="score" id="score-1">0</p></div>
         <div class="team-score-card t2" id="card-2"><h3>Team 2</h3><p class="score" id="score-2">0</p></div>
@@ -210,20 +200,20 @@
         <div class="team-score-card t8" id="card-8"><h3>Team 8</h3><p class="score" id="score-8">0</p></div>
     </div>
 
-    <!-- Interactive Options Panel -->
+    <!-- Pilihan Panel -->
     <div class="action-panel">
         <button class="btn-control btn-end" id="end-btn" onclick="endScoring()">🏁 End Scoring</button>
         <button class="btn-control btn-reset" onclick="resetScores()">🔄 Reset Scores</button>
     </div>
 
-    <!-- Leaderboard Output Section -->
+    <!-- Skrin Kedudukan Terakhir -->
     <div class="results-panel" id="results-section">
         <div class="victory-banner" id="winner-banner"></div>
         <h3 style="text-align:center; color:#34495e;">🏆 Final Group Rankings 🏆</h3>
         <ul class="ranking-list" id="ranking-list"></ul>
     </div>
 
-    <!-- Active Input Elements -->
+    <!-- Kawasan Butang Aktif -->
     <div id="interactive-area">
         <h2 class="grid-title">Click a name to add +1 point to their team:</h2>
         <div class="button-grid" id="buttons-container"></div>
@@ -264,3 +254,23 @@
         { name: "TEE ZHI XUAN", team: 2 },
         { name: "QASRINA ZAHRA BINTI ZAFARIS", team: 6 },
         { name: "WONG YOKE TENG", team: 6 },
+        { name: "CHOONG CHEOK HAN", team: 8 },
+        { name: "JIVHANTIKA A/P SHANMUGANATHAN", team: 7 }
+    ];
+
+    // Reset localStorage secara paksa untuk mengelakkan korupsi data lama
+    localStorage.removeItem('teamScores');
+    let scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
+
+    function updateScoreboardUI() {
+        for (let teamId in scores) {
+            document.getElementById(`score-${teamId}`).innerText = scores[teamId];
+        }
+    }
+
+    function addPoint(teamId) {
+        scores[teamId] += 1;
+        updateScoreboardUI();
+    }
+
+    function resetScores() {
