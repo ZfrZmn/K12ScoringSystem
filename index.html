@@ -236,61 +236,33 @@
         <button class="btn-reset" onclick="resetScores()">Reset All Scores</button>
     </div>
 
-    <!-- Student Buttons Menu -->
+    <!-- Student Buttons Menu (HARDCODED DIRECTLY IN HTML) -->
     <h2 class="grid-title">Click a name to add +1 point to their team:</h2>
-    <div class="button-grid" id="buttons-container"></div>
-</div>
-
-<!-- Final Ranking Modal Pop-Up -->
-<div id="rankingModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">🏆 Final Leaderboard Standings</div>
-        <ul class="ranking-list" id="ranking-list-container"></ul>
-        <button class="btn-close" onclick="closeModal()">Back to Dashboard</button>
-    </div>
-</div>
-
-<script>
-    // --- ROSTER DATABASE ---
-    // Modify the names and update team assignments (1 through 8) right here!
-    const studentsData = [
-        { name: "Adam Harith", team: 1 },
-        { name: "Aisha Sofia", team: 1 },
-        { name: "Amirul Amin", team: 2 },
-        { name: "Batrisyia Huda", team: 2 },
-        { name: "Daniel Hakim", team: 3 },
-        { name: "Farah Nabilah", team: 3 },
-        { name: "Haziq Iqbal", team: 4 },
-        { name: "Idlan Mikael", team: 4 },
-        { name: "Khairul Anwar", team: 5 },
-        { name: "Luqman Faiz", team: 5 },
-        { name: "Mia Kaisara", team: 6 },
-        { name: "Muaz Zakwan", team: 6 },
-        { name: "Nadia Iman", team: 7 },
-        { name: "Putera Nuruddin", team: 7 },
-        { name: "Rayyan Rizqi", team: 8 },
-        { name: "Sarah Alisa", team: 8 }
-    ];
-
-    // State tracks total cumulative scores for Teams 1-8
-    let teamScores = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0 };
-
-    // Initialize layout setup rules on document load
-    document.addEventListener("DOMContentLoaded", () => {
-        loadSavedScores();
-        generateStudentButtons();
-        updateScoreboardDisplay();
-    });
-
-    // Processes structural string logic to generate UI buttons
-    function generateStudentButtons() {
-        const container = document.getElementById("buttons-container");
-        if (!container) return;
-        container.innerHTML = "";
-
-        // Keeps roster presentation clean and alphabetical
-        const sortedStudents = [...studentsData].sort((a, b) => a.name.localeCompare(b.name));
-
-        sortedStudents.forEach(student => {
-            const button = document.createElement("button");
-            button.className = "student-btn";
+    <div class="button-grid" id="buttons-container">
+        
+        <!-- Team 1 -->
+        <button class="student-btn" onclick="addPoint(1)"><span>Adam Harith</span><span class="team-badge t1">Team 1</span></button>
+        <button class="student-btn" onclick="addPoint(1)"><span>Aisha Sofia</span><span class="team-badge t1">Team 1</span></button>
+        
+        <!-- Team 2 -->
+        <button class="student-btn" onclick="addPoint(2)"><span>Amirul Amin</span><span class="team-badge t2">Team 2</span></button>
+        <button class="student-btn" onclick="addPoint(2)"><span>Batrisyia Huda</span><span class="team-badge t2">Team 2</span></button>
+        
+        <!-- Team 3 -->
+        <button class="student-btn" onclick="addPoint(3)"><span>Daniel Hakim</span><span class="team-badge t3">Team 3</span></button>
+        <button class="student-btn" onclick="addPoint(3)"><span>Farah Nabilah</span><span class="team-badge t3">Team 3</span></button>
+        
+        <!-- Team 4 -->
+        <button class="student-btn" onclick="addPoint(4)"><span>Haziq Iqbal</span><span class="team-badge t4">Team 4</span></button>
+        <button class="student-btn" onclick="addPoint(4)"><span>Idlan Mikael</span><span class="team-badge t4">Team 4</span></button>
+        
+        <!-- Team 5 -->
+        <button class="student-btn" onclick="addPoint(5)"><span>Khairul Anwar</span><span class="team-badge t5">Team 5</span></button>
+        <button class="student-btn" onclick="addPoint(5)"><span>Luqman Faiz</span><span class="team-badge t5">Team 5</span></button>
+        
+        <!-- Team 6 -->
+        <button class="student-btn" onclick="addPoint(6)"><span>Mia Kaisara</span><span class="team-badge t6">Team 6</span></button>
+        <button class="student-btn" onclick="addPoint(6)"><span>Muaz Zakwan</span><span class="team-badge t6">Team 6</span></button>
+        
+        <!-- Team 7 -->
+        <button class="student-btn" onclick="addPoint(7)"><span>Nadia Iman</span><span class="team-badge t7">Team 7</span></button>
