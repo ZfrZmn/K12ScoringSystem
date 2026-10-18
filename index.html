@@ -19,14 +19,7 @@
         h1 {
             text-align: center;
             color: #2c3e50;
-            margin-bottom: 5px;
-        }
-        .author-tag {
-            text-align: center;
-            font-size: 1rem;
-            color: #7f8c8d;
             margin-bottom: 30px;
-            font-style: italic;
         }
         /* Scoreboard Styling */
         .scoreboard {
@@ -71,9 +64,6 @@
         .action-panel {
             text-align: right;
             margin-bottom: 20px;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
         }
         .btn-reset {
             background-color: #e74c3c;
@@ -87,18 +77,6 @@
         }
         .btn-reset:hover { background-color: #c0392b; }
 
-        .btn-end {
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-        .btn-end:hover { background-color: #27ae60; }
-
         /* Buttons Grid */
         .grid-title {
             color: #34495e;
@@ -108,7 +86,7 @@
         }
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 15px;
         }
         .student-btn {
@@ -125,7 +103,6 @@
             justify-content: space-between;
             transition: all 0.2s ease;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            width: 100%;
         }
         .student-btn:hover {
             transform: translateY(-2px);
@@ -143,81 +120,12 @@
             margin-top: 10px;
             font-weight: bold;
         }
-
-        /* Modal / Popup Styling for Results */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            animation: slideDown 0.3s ease-out;
-        }
-        @keyframes slideDown {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .modal-header {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            text-align: center;
-            border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 10px;
-        }
-        .ranking-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 20px 0;
-        }
-        .ranking-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-radius: 6px;
-            font-weight: bold;
-        }
-        .ranking-rank {
-            font-size: 1.1rem;
-            margin-right: 10px;
-        }
-        .btn-close {
-            display: block;
-            width: 100%;
-            background-color: #34495e;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-            text-align: center;
-        }
-        .btn-close:hover { background-color: #2c3e50; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>Team Kuliah 12 - Scoring Dashboard</h1>
-    <div class="author-tag">by afikuza</div>
 
     <!-- Cumulative Scoreboard -->
     <div class="scoreboard">
@@ -232,24 +140,98 @@
     </div>
 
     <div class="action-panel">
-        <button class="btn-end" onclick="showFinalRanking()">End Scoring</button>
         <button class="btn-reset" onclick="resetScores()">Reset All Scores</button>
     </div>
 
-    <!-- Student Buttons Menu (Alphabetical Order) -->
+    <!-- Student Buttons Menu -->
     <h2 class="grid-title">Click a name to add +1 point to their team:</h2>
-    <div class="button-grid" id="buttons-container">
-        <button class="student-btn" onclick="addPoint(6)"><span>AHMAD ALIMI ADLI BIN ABDUL AZIZ</span><span class="team-badge t6">Team 6</span></button>
-        <button class="student-btn" onclick="addPoint(8)"><span>AINUL AIFFA ATHIRAH BINTI ZULKIFLI</span><span class="team-badge t8">Team 8</span></button>
-        <button class="student-btn" onclick="addPoint(3)"><span>AMIRA DAMIA BINTI AZIZUL</span><span class="team-badge t3">Team 3</span></button>
-        <button class="student-btn" onclick="addPoint(1)"><span>AYUMI NUR ARIESYA BINTI NORHISHAM</span><span class="team-badge t1">Team 1</span></button>
-        <button class="student-btn" onclick="addPoint(8)"><span>BADRUL HAZIQ HAKIMI BIN BAKHTIAR</span><span class="team-badge t8">Team 8</span></button>
-        <button class="student-btn" onclick="addPoint(8)"><span>CHOONG CHEOK HAN</span><span class="team-badge t8">Team 8</span></button>
-        <button class="student-btn" onclick="addPoint(3)"><span>HANG JUN SEN</span><span class="team-badge t3">Team 3</span></button>
-        <button class="student-btn" onclick="addPoint(5)"><span>HANA MAISARAH BINTI ILYAS</span><span class="team-badge t5">Team 5</span></button>
-        <button class="student-btn" onclick="addPoint(7)"><span>JIVHANTIKA A/P SHANMUGANATHAN</span><span class="team-badge t7">Team 7</span></button>
-        <button class="student-btn" onclick="addPoint(1)"><span>KELLY NEOH</span><span class="team-badge t1">Team 1</span></button>
-        <button class="student-btn" onclick="addPoint(5)"><span>LEE XU YANG</span><span class="team-badge t5">Team 5</span></button>
-        <button class="student-btn" onclick="addPoint(3)"><span>MARISSA KHADEEJA BINTI MOHD KHUSAIRI</span><span class="team-badge t3">Team 3</span></button>
-        <button class="student-btn" onclick="addPoint(7)"><span>MUHAMAD AFIQ ZAFRI BIN MOHD ZAMAN</span><span class="team-badge t7">Team 7</span></button>
-        <button class="student-btn" onclick="addPoint(1)"><span>MUHAMMAD AIMAN BIN ABDUL WAHID</span><span class="team-badge t1">Team 1</span></button>
+    <div class="button-grid" id="buttons-container"></div>
+</div>
+
+<script>
+    // List of students mapped precisely to their team numbers from the document
+    const students = [
+        { name: "NOR AMIRA BALQIS BINTI ABU SAMAH", team: 1 },
+        { name: "KELLY NEOH", team: 1 },
+        { name: "AYUMI NUR ARIESYA BINTI NORHISHAM", team: 1 },
+        { name: "NURUL IZZATI FAQIHAH BINTI MOHD NAZARIEE", team: 2 },
+        { name: "NUR QURRATUL QAISARA BINTI ZULKEFELY", team: 2 },
+        { name: "AMIRA DAMIA BINTI AZIZUL", team: 3 },
+        { name: "MARISSA KHADEEJA BINTI MOHD KHUSAIRI", team: 3 },
+        { name: "MUHAMMAD AQIL HAZIQ BIN MOHD NAZIR", team: 3 },
+        { name: "HANG JUN SEN", team: 3 },
+        { name: "NUR HANNAN HUSAINI BINTI HASSANNUDDIN", team: 4 },
+        { name: "QASIH FARISHA BINTI MOHD FARIS", team: 4 },
+        { name: "WAN MUHAMMAD FARIS BIN MOHD RIDZAL", team: 5 },
+        { name: "NURIN SYAHINDAH BINTI MOHD FAIZAL", team: 1 },
+        { name: "MUHAMMAD HAZIM BIN MOHD ZAHARI", team: 1 },
+        { name: "MUHAMMAD AIMAN BIN ABDUL WAHID", team: 1 },
+        { name: "MUHAMMAD YUSUF BIN ROSDIADI", team: 2 },
+        { name: "MUHAMMAD MURSYID BIN ABDUL RAZAK", team: 2 },
+        { name: "SITI DHIA TIHANI BINTI MOHD WIRA", team: 6 },
+        { name: "AHMAD ALIMI ADLI BIN ABDUL AZIZ", team: 6 },
+        { name: "HANA MAISARAH BINTI ILYAS", team: 5 },
+        { name: "LEE XU YANG", team: 5 },
+        { name: "TAZMEEN RUKHSANA BINTI TAJMUL RIZWAN", team: 7 },
+        { name: "MUHAMAD AFIQ ZAFRI BIN MOHD ZAMAN", team: 7 },
+        { name: "MUHAMMAD FARHANNUDIN BIN MOHAMMAD NOR AZIZ", team: 7 },
+        { name: "AINUL AIFFA ATHIRAH BINTI ZULKIFLI", team: 8 },
+        { name: "BADRUL HAZIQ HAKIMI BIN BAKHTIAR", team: 8 },
+        { name: "NUR AMIRAH BINTI ADNAN", team: 8 },
+        { name: "RIZQ HAIKAL BIN REIME", team: 4 },
+        { name: "TAN JUN YUAN", team: 4 },
+        { name: "TEE ZHI XUAN", team: 2 },
+        { name: "QASRINA ZAHRA BINTI ZAFARIS", team: 6 },
+        { name: "WONG YOKE TENG", team: 6 },
+        { name: "CHOONG CHEOK HAN", team: 8 },
+        { name: "JIVHANTIKA A/P SHANMUGANATHAN", team: 7 }
+    ];
+
+    // Initialize team scores from localStorage or default to 0
+    let scores = JSON.parse(localStorage.getItem('teamScores')) || {
+        1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0
+    };
+
+    // Update the UI on startup
+    function updateScoreboardUI() {
+        for (let teamId in scores) {
+            document.getElementById(`score-${teamId}`).innerText = scores[teamId];
+        }
+    }
+
+    // Add point function
+    function addPoint(teamId) {
+        scores[teamId] += 1;
+        localStorage.setItem('teamScores', JSON.stringify(scores));
+        updateScoreboardUI();
+    }
+
+    // Reset scores function
+    function resetScores() {
+        if(confirm("Are you sure you want to reset all team marks back to zero?")) {
+            scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
+            localStorage.setItem('teamScores', JSON.stringify(scores));
+            updateScoreboardUI();
+        }
+    }
+
+    // Generate Name Buttons into Grid
+    const container = document.getElementById('buttons-container');
+    students.forEach(student => {
+        const btn = document.createElement('button');
+        btn.className = 'student-btn';
+        btn.onclick = () => addPoint(student.team);
+        
+        btn.innerHTML = `
+            <span>${student.name}</span>
+            <span class="team-badge t${student.team}">Team ${student.team}</span>
+        `;
+        container.appendChild(btn);
+    });
+
+    // Run initial UI updates
+    updateScoreboardUI();
+</script>
+
+</body>
+</html>
