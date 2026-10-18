@@ -245,38 +245,52 @@
 <div id="rankingModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">🏆 Final Leaderboard Standings</div>
-        <ul class="ranking-list" id="ranking-list-container">
-            <!-- Programmatically populated ranking items go here -->
-        </ul>
+        <ul class="ranking-list" id="ranking-list-container"></ul>
         <button class="btn-close" onclick="closeModal()">Back to Dashboard</button>
     </div>
 </div>
 
 <script>
-    // List of students mapped precisely to their team numbers from the document
-    const students = [
-        { name: "NOR AMIRA BALQIS BINTI ABU SAMAH", team: 1 },
-        { name: "KELLY NEOH", team: 1 },
-        { name: "AYUMI NUR ARIESYA BINTI NORHISHAM", team: 1 },
-        { name: "NURUL IZZATI FAQIHAH BINTI MOHD NAZARIEE", team: 2 },
-        { name: "NUR QURRATUL QAISARA BINTI ZULKEFELY", team: 2 },
-        { name: "AMIRA DAMIA BINTI AZIZUL", team: 3 },
-        { name: "MARISSA KHADEEJA BINTI MOHD KHUSAIRI", team: 3 },
-        { name: "MUHAMMAD AQIL HAZIQ BIN MOHD NAZIR", team: 3 },
-        { name: "HANG JUN SEN", team: 3 },
-        { name: "NUR HANNAN HUSAINI BINTI HASSANNUDDIN", team: 4 },
-        { name: "QASIH FARISHA BINTI MOHD FARIS", team: 4 },
-        { name: "WAN MUHAMMAD FARIS BIN MOHD RIDZAL", team: 5 },
-        { name: "NURIN SYAHINDAH BINTI MOHD FAIZAL", team: 1 },
-        { name: "MUHAMMAD HAZIM BIN MOHD ZAHARI", team: 1 },
-        { name: "MUHAMMAD AIMAN BIN ABDUL WAHID", team: 1 },
-        { name: "MUHAMMAD YUSUF BIN ROSDIADI", team: 2 },
-        { name: "MUHAMMAD MURSYID BIN ABDUL RAZAK", team: 2 },
-        { name: "SITI DHIA TIHANI BINTI MOHD WIRA", team: 6 },
-        { name: "AHMAD ALIMI ADLI BIN ABDUL AZIZ", team: 6 },
-        { name: "HANA MAISARAH BINTI ILYAS", team: 5 },
-        { name: "LEE XU YANG", team: 5 },
-        { name: "TAZMEEN RUKHSANA BINTI TAJMUL RIZWAN", team: 7 },
-        { name: "MUHAMAD AFIQ ZAFRI BIN MOHD ZAMAN", team: 7 },
-        { name: "MUHAMMAD FARHANNUDIN BIN MOHAMMAD NOR AZIZ", team: 7 },
-        { name: "AINUL AIFFA ATHIRAH BINTI ZULKIFLI", team: 8 },
+    // --- ROSTER DATABASE ---
+    // Modify the names and update team assignments (1 through 8) right here!
+    const studentsData = [
+        { name: "Adam Harith", team: 1 },
+        { name: "Aisha Sofia", team: 1 },
+        { name: "Amirul Amin", team: 2 },
+        { name: "Batrisyia Huda", team: 2 },
+        { name: "Daniel Hakim", team: 3 },
+        { name: "Farah Nabilah", team: 3 },
+        { name: "Haziq Iqbal", team: 4 },
+        { name: "Idlan Mikael", team: 4 },
+        { name: "Khairul Anwar", team: 5 },
+        { name: "Luqman Faiz", team: 5 },
+        { name: "Mia Kaisara", team: 6 },
+        { name: "Muaz Zakwan", team: 6 },
+        { name: "Nadia Iman", team: 7 },
+        { name: "Putera Nuruddin", team: 7 },
+        { name: "Rayyan Rizqi", team: 8 },
+        { name: "Sarah Alisa", team: 8 }
+    ];
+
+    // State tracks total cumulative scores for Teams 1-8
+    let teamScores = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0 };
+
+    // Initialize layout setup rules on document load
+    document.addEventListener("DOMContentLoaded", () => {
+        loadSavedScores();
+        generateStudentButtons();
+        updateScoreboardDisplay();
+    });
+
+    // Processes structural string logic to generate UI buttons
+    function generateStudentButtons() {
+        const container = document.getElementById("buttons-container");
+        if (!container) return;
+        container.innerHTML = "";
+
+        // Keeps roster presentation clean and alphabetical
+        const sortedStudents = [...studentsData].sort((a, b) => a.name.localeCompare(b.name));
+
+        sortedStudents.forEach(student => {
+            const button = document.createElement("button");
+            button.className = "student-btn";
