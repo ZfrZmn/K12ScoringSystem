@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Scoring System - Kuliah 12</title>
+    <title>Team Scoring System - Kuliah 12 by afikuza</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,19 +16,10 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-        .header-area {
-            text-align: center;
-            margin-bottom: 30px;
-        }
         h1 {
+            text-align: center;
             color: #2c3e50;
-            margin: 0 0 5px 0;
-        }
-        .credit {
-            font-size: 1.1rem;
-            color: #7f8c8d;
-            font-style: italic;
-            margin: 0;
+            margin-bottom: 30px;
         }
         /* Scoreboard Styling */
         .scoreboard {
@@ -77,19 +68,29 @@
             justify-content: flex-end;
             gap: 10px;
         }
-        .btn-action {
+        .btn-reset {
+            background-color: #e74c3c;
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1rem;
+            transition: background 0.2s;
         }
-        .btn-end { background-color: #2c3e50; }
-        .btn-end:hover { background-color: #1a252f; }
-        .btn-reset { background-color: #e74c3c; }
         .btn-reset:hover { background-color: #c0392b; }
+
+        .btn-end {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn-end:hover { background-color: #219653; }
 
         /* Buttons Grid */
         .grid-title {
@@ -123,7 +124,9 @@
             box-shadow: 0 5px 10px rgba(0,0,0,0.08);
             border-color: #3498db;
         }
-        .student-btn:active { transform: translateY(0); }
+        .student-btn:active {
+            transform: translateY(0);
+        }
         .student-btn .team-badge {
             align-self: flex-start;
             font-size: 0.7rem;
@@ -133,27 +136,40 @@
             font-weight: bold;
         }
 
-        /* Leaderboard Panel Layout */
-        .results-panel {
+        /* Ranking Modal Overlay */
+        .modal-overlay {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
             background: white;
             padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            margin-top: 20px;
-        }
-        .victory-banner {
-            text-align: center;
-            padding: 25px;
             border-radius: 12px;
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 30px;
-            border: 3px dashed rgba(0,0,0,0.15);
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            color: #2c3e50;
         }
         .ranking-list {
-            max-width: 600px;
-            margin: 0 auto;
+            margin: 20px 0;
             padding: 0;
             list-style: none;
         }
@@ -161,37 +177,31 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
-            margin-bottom: 10px;
-            border-radius: 8px;
+            padding: 12px 20px;
+            margin-bottom: 8px;
+            border-radius: 6px;
             font-weight: bold;
-            font-size: 1.2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        .rank-badge {
-            background: rgba(0,0,0,0.15);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+        .ranking-item .rank-badge {
+            font-size: 1.1rem;
+            margin-right: 10px;
         }
-
-        /* Pure CSS Confetti Style */
-        .confetti-particle {
-            position: fixed; width: 12px; height: 12px; top: -20px; z-index: 9999;
-            animation: fallAnimation 3.5s linear infinite;
+        .close-modal {
+            background-color: #34495e;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
         }
-        @keyframes fallAnimation {
-            to { transform: translateY(105vh) rotate(720deg); }
-        }
+        .close-modal:hover { background-color: #2c3e50; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header-area">
-        <h1>Team Kuliah 12 - Scoring Dashboard</h1>
-        <p class="credit">by 何 afikuza.</p>
-    </div>
+    <h1>Team Kuliah 12 - Scoring Dashboard</h1>
 
     <!-- Cumulative Scoreboard -->
     <div class="scoreboard">
@@ -206,25 +216,27 @@
     </div>
 
     <div class="action-panel">
-        <button class="btn-action btn-end" onclick="endScoring()">🏁 End Scoring</button>
-        <button class="btn-action btn-reset" onclick="resetScores()">Reset All Scores</button>
-    </div>
-
-    <!-- Final Leaderboard Results -->
-    <div class="results-panel" id="results-section">
-        <div class="victory-banner" id="winner-banner"></div>
-        <h3 style="text-align:center; color:#34495e; margin-bottom:20px;">🏆 Final Group Rankings 🏆</h3>
-        <ul class="ranking-list" id="ranking-list"></ul>
+        <button class="btn-end" onclick="endScoring()">End Scoring & Rank</button>
+        <button class="btn-reset" onclick="resetScores()">Reset All Scores</button>
     </div>
 
     <!-- Student Buttons Menu -->
-    <div id="interactive-area">
-        <h2 class="grid-title">Click a name to add +1 point to their team:</h2>
-        <div class="button-grid" id="buttons-container"></div>
+    <h2 class="grid-title">Click a name to add +1 point to their team:</h2>
+    <div class="button-grid" id="buttons-container"></div>
+</div>
+
+<!-- Ranking Modal Window -->
+<div class="modal-overlay" id="ranking-modal">
+    <div class="modal-content">
+        <h2>🏆 Final Team Rankings 🏆</h2>
+        <p style="color: #7f8c8d; font-size: 0.9rem;">Calculated by afikuza</p>
+        <ul class="ranking-list" id="ranking-list"></ul>
+        <button class="close-modal" onclick="closeModal()">Back to Dashboard</button>
     </div>
 </div>
 
 <script>
+    // List of students mapped precisely to their team numbers from the document
     const students = [
         { name: "NOR AMIRA BALQIS BINTI ABU SAMAH", team: 1 },
         { name: "KELLY NEOH", team: 1 },
@@ -262,9 +274,3 @@
         { name: "JIVHANTIKA A/P SHANMUGANATHAN", team: 7 }
     ];
 
-    let scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
-    try {
-        const savedScores = localStorage.getItem('teamScores');
-        if (savedScores) {
-            const parsed = JSON.parse(savedScores);
-            if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
