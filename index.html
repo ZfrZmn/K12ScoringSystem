@@ -3,158 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Kuliah 12 - Live Scoring System</title>
-    <!-- Tailwind CSS for modern, interactive styling -->
-    <script src="https://tailwindcss.com"></script>
-    <!-- FontAwesome for engaging iconography -->
-    <link rel="stylesheet" href="https://cloudflare.com">
-    <!-- Confetti library for celebration animations -->
+    <title>Team Scoring System - Kuliah 12</title>
+    <!-- Confetti library for high-engagement victory bursts -->
     <script src="https://jsdelivr.net"></script>
     <style>
-        @import url('https://googleapis.com');
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: radial-gradient(circle at top left, #1e1b4b 0%, #0f172a 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
         }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(30, 41, 59, 0.5);
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(148, 163, 184, 0.3);
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+        
+        /* Scoreboard Grid Styling */
+        .scoreboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .team-score-card {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .team-score-card:hover {
+            transform: translateY(-2px);
+        }
+        .team-score-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .team-score-card .score {
+            font-size: 2rem;
+            margin: 0;
+            font-family: monospace;
+        }
+        
+        /* Authentic Team Colors from Document Context */
+        .t1 { background-color: #d1a3d1; color: #4a144a !important; }
+        .t2 { background-color: #2ecc71; color: #0f4021 !important; }
+        .t3 { background-color: #e74c3c; color: #56140d !important; }
+        .t4 { background-color: #ffaa66; color: #5c3008 !important; }
+        .t5 { background-color: #3498db; color: #0f3652 !important; }
+        .t6 { background-color: #95a5a6; color: #2c3e50 !important; }
+        .t7 { background-color: #f1c40f; color: #544403 !important; }
+        .t8 { background-color: #bdc3c7; color: #2c3e50 !important; }
+
+        /* Mode & Action Control Panels Layout */
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            background: #fff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .mode-toggle {
+            display: flex;
+            background: #eee;
+            padding: 4px;
+            border-radius: 8px;
+            gap: 4px;
+        }
+        .btn-mode {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+        .btn-mode.active-add {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .btn-mode.active-deduct {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .btn-mode:not(.active-add):not(.active-deduct) {
+            background: transparent;
+            color: #666;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-action {
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+        .btn-end {
+            background-color: #34495e;
+        }
+        .btn-end:hover {
+            background-color: #2c3e50;
+            transform: translateY(-1px);
+        }
+        .btn-reset {
+            background-color: #95a5a6;
+        }
+        .btn-reset:hover {
+            background-color: #7f8c8d;
+        }
+
+        /* Interactive Grid Panels */
+        .grid-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.25rem;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+        }
+        .student-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            user-select: none;
+        }
+        .student-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+        }
+        .student-btn:active {
+            transform: translateY(0);
+        }
+        .student-name {
+            font-weight: 700;
+            color: #2c3e50;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+        .student-btn .team-badge {
+            align-self: flex-start;
+            font-size: 0.7rem;
+            padding: 4px 10px;
             border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(148, 163, 184, 0.5);
+
+        /* Floating Score Click Animation Elements */
+        .score-splash {
+            position: fixed;
+            font-weight: 900;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 1000;
+            animation: floatUp 0.6s ease-out forwards;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.8); opacity: 1; }
+            100% { transform: translateY(-40px) scale(1.2); opacity: 0; }
+        }
+
+        /* Final Rankings Modal Window Overlay Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-card {
+            transform: translateY(0);
+        }
+        .modal-card h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.8rem;
+        }
+        .rankings-list {
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .rank-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+        .rank-position {
+            background: rgba(255,255,255,0.3);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+        .btn-close-modal {
+            background-color: #34495e;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+        .btn-close-modal:hover {
+            background-color: #2c3e50;
         }
     </style>
 </head>
-<body class="text-slate-100 min-h-screen dynamic-zone antialiased pb-12">
+<body>
 
-    <!-- Header & Live Dashboard Navbar -->
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-40 px-4 py-4 sm:px-6">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <div class="p-2.5 bg-indigo-600/20 text-indigo-400 rounded-xl border border-indigo-500/30 shadow-inner">
-                    <i class="fa-solid fa-trophy text-2xl animate-pulse"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-200 to-indigo-400 bg-clip-text text-transparent">TEAM KULIAH 12</h1>
-                    <p class="text-xs text-indigo-300 font-medium tracking-wide">REAL-TIME GROUP SCORING SYSTEM</p>
-                </div>
-            </div>
+<div class="container">
+    <h1>Team Kuliah 12 - Scoring Dashboard</h1>
+    <p class="subtitle">Click a name card below to instantly modify their constituent team's point score.</p>
 
-            <!-- Action Controls & Toggle -->
-            <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
-                <!-- Mode Selector Slider Toggle -->
-                <div class="bg-slate-950 p-1 rounded-xl border border-slate-800 flex items-center shadow-inner">
-                    <button id="mode-add" onclick="setMode('add')" class="px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 flex items-center gap-2 bg-emerald-500 text-white shadow">
-                        <i class="fa-solid fa-circle-plus"></i> Reward (+1)
-                    </button>
-                    <button id="mode-deduct" onclick="setMode('deduct')" class="px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 flex items-center gap-2 text-slate-400 hover:text-rose-400">
-                        <i class="fa-solid fa-circle-minus"></i> Deduct (-1)
-                    </button>
-                </div>
-
-                <!-- Finalize Scoring Trigger -->
-                <button onclick="endScoring()" class="px-5 py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-slate-950 font-extrabold rounded-xl text-sm transition-all shadow-lg hover:shadow-orange-500/20 hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2">
-                    <i class="fa-solid fa-flag-checkered text-base"></i> End Scoring
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        <!-- Left Side: Live Standings Panel (4 Cols) -->
-        <section class="lg:col-span-4 flex flex-col gap-4 order-first lg:order-none">
-            <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 backdrop-blur-sm sticky top-28">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-sm font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
-                        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Live Board Standings
-                    </h2>
-                    <button onclick="resetScores()" class="text-xs font-semibold text-slate-500 hover:text-rose-400 transition-colors flex items-center gap-1">
-                        <i class="fa-solid fa-arrow-rotate-left"></i> Reset
-                    </button>
-                </div>
-
-                <!-- Live Teams Stack -->
-                <div id="live-standings-container" class="space-y-3">
-                    <!-- Dynamic rendering generated inside JS injection -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Right Side: Interactive Roster Grid System (8 Cols) -->
-        <section class="lg:col-span-8 flex flex-col gap-6">
-            <!-- Roster Instructions Panel -->
-            <div class="bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border border-slate-800 rounded-2xl p-5 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0 text-indigo-400">
-                    <i id="action-icon-hint" class="fa-solid fa-hand-pointer text-xl animate-bounce"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-bold text-slate-200">Interactive Click-to-Score Action Roster</h3>
-                    <p id="action-text-hint" class="text-xs text-slate-400 mt-0.5">Currently in <span class="text-emerald-400 font-bold">Reward Mode</span>. Tap any individual's identity card button below to immediately credit their constituent team (+1 point).</p>
-                </div>
-            </div>
-
-            <!-- Main Group Layout Shell -->
-            <div id="roster-grid-container" class="space-y-8">
-                <!-- Programmatically rendered arrays by Group -->
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Leaderboard Overlay / Final Ranking Presentation Modal Screen -->
-    <div id="leaderboard-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-500 flex items-center justify-center p-4">
-        <div class="max-w-2xl w-full text-center transform scale-95 transition-all duration-500" id="modal-card">
-            
-            <div class="inline-flex p-4 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full mb-4 animate-spin-slow">
-                <i class="fa-solid fa-crown text-4xl"></i>
-            </div>
-            
-            <h2 class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-amber-300 via-yellow-200 to-orange-400 bg-clip-text text-transparent tracking-tight">
-                Final Ranking Leaderboard
-            </h2>
-            <p class="text-slate-400 text-sm sm:text-base mt-2">Scoring session concluded. Here are the team placements for Team Kuliah 12.</p>
-
-            <!-- Podiums / List Wrapper View -->
-            <div id="final-podium-list" class="mt-8 space-y-3 max-h-[60vh] overflow-y-auto custom-scrollbar px-2">
-                <!-- Javascript will inject sorted rows here -->
-            </div>
-
-            <!-- Resume Action footer -->
-            <button onclick="closeModal()" class="mt-8 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl text-sm transition-all border border-slate-700">
-                <i class="fa-solid fa-xmark mr-1.5"></i> Return to Editing Dashboard
-            </button>
-        </div>
+    <!-- Cumulative Scoreboard View -->
+    <div class="scoreboard">
+        <div class="team-score-card t1"><h3>Team 1</h3><p class="score" id="score-1">0</p></div>
+        <div class="team-score-card t2"><h3>Team 2</h3><p class="score" id="score-2">0</p></div>
+        <div class="team-score-card t3"><h3>Team 3</h3><p class="score" id="score-3">0</p></div>
+        <div class="team-score-card t4"><h3>Team 4</h3><p class="score" id="score-4">0</p></div>
+        <div class="team-score-card t5"><h3>Team 5</h3><p class="score" id="score-5">0</p></div>
+        <div class="team-score-card t6"><h3>Team 6</h3><p class="score" id="score-6">0</p></div>
+        <div class="team-score-card t7"><h3>Team 7</h3><p class="score" id="score-7">0</p></div>
+        <div class="team-score-card t8"><h3>Team 8</h3><p class="score" id="score-8">0</p></div>
     </div>
 
-    <!-- Main JavaScript Architecture Module -->
-    <script>
-        // Full Programmatic Student Dataset mapped precisely from the provided course roster PDF context
-        const studentDataset = [
-            { name: "NOR AMIRA BALQIS BINTI ABU SAMAH", matrix: "AS260031", team: 1 },
-            { name: "KELLY NEOH", matrix: "AS260037", team: 1 },
-            { name: "AYUMI NUR ARIESYA BINTI NORHISHAM", matrix: "AS260051", team: 1 },
-            { name: "NURUL IZZATI FAQIHAH BINTI MOHD NAZARIEE", matrix: "AS260069", team: 2 },
-            { name: "NUR QURRATUL QAISARA BINTI ZULKEFELY", matrix: "AS260079", team: 2 },
-            { name: "AMIRA DAMIA BINTI AZIZUL", matrix: "AS260083", team: 3 },
-            { name: "MARISSA KHADEEJA BINTI MOHD KHUSAIRI", matrix: "AS260124", team: 3 },
-            { name: "MUHAMMAD AQIL HAZIQ BIN MOHD NAZIR", matrix: "AS260135", team: 3 },
-            { name: "HANG JUN SEN", matrix: "AS260154", team: 3 },
-            { name: "NUR HANNAN HUSAINI BINTI HASSANNUDDIN", matrix: "AS260160", team: 4 },
-            { name: "QASIH FARISHA BINTI MOHD FARIS", matrix: "AS260211", team: 4 },
-            { name: "WAN MUHAMMAD FARIS BIN MOHD RIDZAL", matrix: "AS260221", team: 5 },
-            { name: "NURIN SYAHINDAH BINTI MOHD FAIZAL", matrix: "AS260242", team: 1 },
-            { name: "MUHAMMAD HAZIM BIN MOHD ZAHARI", matrix: "AS260245", team: 1 },
-            { name: "MUHAMMAD AIMAN BIN ABDUL WAHID", matrix: "AS260260", team: 1 },
-            { name: "MUHAMMAD YUSUF BIN ROSDIADI", matrix: "AS260313", team: 2 },
-            { name: "MUHAMMAD MURSYID BIN ABDUL RAZAK", matrix: "AS260321", team: 2 },
-            { name: "SITI DHIA TIHANI BINTI MOHD WIRA", matrix: "AS260326", team: 6 },
-            { name: "AHMAD ALIMI ADLI BIN ABDUL AZIZ", matrix: "AS260340", team: 6 },
-            { name: "HANA MAISARAH BINTI ILYAS", matrix: "AS260353", team: 5 },
-            { name: "LEE XU YANG", matrix: "AS260380", team: 5 },
