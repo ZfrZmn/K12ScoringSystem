@@ -3,52 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ Ultimate Team Scoring System ✨</title>
+    <title>Team Scoring System - Kuliah 12 🚀</title>
     <style>
+        :root {
+            --bg-dark: #0a0e17;
+            --card-bg: #121824;
+            --neon-t1: #ff007f; /* Neon Pink */
+            --neon-t2: #00ff66; /* Neon Green */
+            --neon-t3: #ff3333; /* Neon Red */
+            --neon-t4: #ff9900; /* Neon Orange */
+            --neon-t5: #00ffff; /* Neon Cyan */
+            --neon-t6: #9933ff; /* Neon Purple */
+            --neon-t7: #ffff00; /* Neon Yellow */
+            --neon-t8: #ffffff; /* Neon White */
+        }
+
         body {
-            font-family: 'Poppins', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 50%, #1a233a 0%, var(--bg-dark) 80%);
             margin: 0;
-            padding: 30px;
-            color: #f8fafc;
+            padding: 20px;
+            color: #f0f4f8;
             min-height: 100vh;
         }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 40px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
+
         h1 {
             text-align: center;
-            font-size: 2.8rem;
-            background: linear-gradient(45deg, #38bdf8, #c084fc, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            filter: drop-shadow(0 2px 8px rgba(192, 132, 252, 0.2));
-        }
-        .credit-link {
-            display: block;
-            text-align: center;
-            margin-bottom: 35px;
-            font-style: italic;
-            color: #94a3b8;
-            font-weight: 600;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .credit-link:hover {
-            color: #38bdf8;
-            text-shadow: 0 0 12px rgba(56, 189, 248, 0.8), 0 0 20px rgba(56, 189, 248, 0.4);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.2);
+            margin-bottom: 30px;
         }
 
         /* Scoreboard Grid */
@@ -57,209 +49,186 @@
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
-            padding: 10px;
+            background: rgba(18, 24, 36, 0.7);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
+
         .team-score-card {
             text-align: center;
-            padding: 20px 15px;
-            border-radius: 16px;
+            padding: 20px 10px;
+            border-radius: 12px;
             font-weight: bold;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: #161f30;
+            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
         }
-        .team-score-card:hover {
-            transform: translateY(-8px) scale(1.03);
-        }
+
         .team-score-card h3 {
-            margin: 0 0 8px 0;
-            font-size: 1rem;
+            margin: 0 0 10px 0;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            opacity: 0.9;
+            color: #8fa0dd;
         }
+
         .team-score-card .score {
             font-size: 2.5rem;
             margin: 0;
-            font-weight: 800;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        /* Neon Theming Map */
-        .t1 { background: linear-gradient(135deg, #6b21a8, #d8b4fe); color: #ffffff !important; box-shadow: 0 0 15px rgba(216, 180, 254, 0.3); }
-        .t2 { background: linear-gradient(135deg, #065f46, #6ee7b7); color: #ffffff !important; box-shadow: 0 0 15px rgba(110, 231, 183, 0.3); }
-        .t3 { background: linear-gradient(135deg, #991b1b, #fca5a5); color: #ffffff !important; box-shadow: 0 0 15px rgba(252, 165, 165, 0.3); }
-        .t4 { background: linear-gradient(135deg, #9a3412, #fed7aa); color: #ffffff !important; box-shadow: 0 0 15px rgba(254, 215, 170, 0.3); }
-        .t5 { background: linear-gradient(135deg, #1e40af, #93c5fd); color: #ffffff !important; box-shadow: 0 0 15px rgba(147, 197, 253, 0.3); }
-        .t6 { background: linear-gradient(135deg, #374151, #d1d5db); color: #ffffff !important; box-shadow: 0 0 15px rgba(209, 213, 219, 0.3); }
-        .t7 { background: linear-gradient(135deg, #854d0e, #fde047); color: #ffffff !important; box-shadow: 0 0 15px rgba(253, 224, 71, 0.3); }
-        .t8 { background: linear-gradient(135deg, #1f2937, #9ca3af); color: #ffffff !important; box-shadow: 0 0 15px rgba(156, 163, 175, 0.3); }
-
-        /* Mode and Control Panel */
-        .action-panel {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px 30px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .mode-toggle-group {
-            display: flex;
-            gap: 15px;
-        }
-        .mode-label {
-            cursor: pointer;
-            padding: 12px 24px;
-            border-radius: 12px;
+            font-family: monospace;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.03);
-            border: 2px solid transparent;
         }
-        .mode-label:has(input[value="add"]:checked) {
-            background: rgba(16, 185, 129, 0.15);
-            border-color: #10b981;
-            color: #34d399;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+
+        /* Glow themes for teams */
+        .t1 { border-color: var(--neon-t1); box-shadow: 0 0 15px rgba(255, 0, 127, 0.2), inset 0 0 15px rgba(255, 0, 127, 0.1); }
+        .t1 .score { color: var(--neon-t1); text-shadow: 0 0 10px rgba(255, 0, 127, 0.5); }
+        
+        .t2 { border-color: var(--neon-t2); box-shadow: 0 0 15px rgba(0, 255, 102, 0.2), inset 0 0 15px rgba(0, 255, 102, 0.1); }
+        .t2 .score { color: var(--neon-t2); text-shadow: 0 0 10px rgba(0, 255, 102, 0.5); }
+
+        .t3 { border-color: var(--neon-t3); box-shadow: 0 0 15px rgba(255, 51, 51, 0.2), inset 0 0 15px rgba(255, 51, 51, 0.1); }
+        .t3 .score { color: var(--neon-t3); text-shadow: 0 0 10px rgba(255, 51, 51, 0.5); }
+
+        .t4 { border-color: var(--neon-t4); box-shadow: 0 0 15px rgba(255, 153, 0, 0.2), inset 0 0 15px rgba(255, 153, 0, 0.1); }
+        .t4 .score { color: var(--neon-t4); text-shadow: 0 0 10px rgba(255, 153, 0, 0.5); }
+
+        .t5 { border-color: var(--neon-t5); box-shadow: 0 0 15px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.1); }
+        .t5 .score { color: var(--neon-t5); text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+
+        .t6 { border-color: var(--neon-purple); border-color: var(--neon-t6); box-shadow: 0 0 15px rgba(153, 51, 255, 0.2), inset 0 0 15px rgba(153, 51, 255, 0.1); }
+        .t6 .score { color: var(--neon-t6); text-shadow: 0 0 10px rgba(153, 51, 255, 0.5); }
+
+        .t7 { border-color: var(--neon-t7); box-shadow: 0 0 15px rgba(2ffff, 0, 0.2), inset 0 0 15px rgba(255, 255, 0, 0.1); }
+        .t7 .score { color: var(--neon-t7); text-shadow: 0 0 10px rgba(255, 255, 0, 0.5); }
+
+        .t8 { border-color: var(--neon-t8); box-shadow: 0 0 15px rgba(255, 255, 255, 0.1), inset 0 0 15px rgba(255, 255, 255, 0.05); }
+        .t8 .score { color: var(--neon-t8); text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+
+        /* Scoring Flash Animation */
+        @keyframes flash-bump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.12); filter: brightness(1.5); }
+            100% { transform: scale(1); }
         }
-        .mode-label:has(input[value="subtract"]:checked) {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: #ef4444;
-            color: #f87171;
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
-        }
-        .mode-label input {
-            display: none;
+        .bump { animation: flash-bump 0.4s ease-out; }
+
+        /* Action Panel */
+        .action-panel {
+            text-align: right;
+            margin-bottom: 25px;
         }
         .btn-reset {
-            background: linear-gradient(135deg, #dc2626, #f87171);
-            color: white;
-            border: none;
+            background-color: transparent;
+            color: #ff3333;
+            border: 2px solid #ff3333;
             padding: 12px 24px;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.2);
-            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.2);
         }
         .btn-reset:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+            background-color: #ff3333;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+            transform: translateY(-2px);
         }
 
-        /* Leaderboard styling */
+        /* Buttons Section */
         .grid-title {
-            color: #f1f5f9;
-            font-size: 1.6rem;
-            margin-bottom: 20px;
+            color: #a5b4fc;
+            border-bottom: 1px dashed rgba(165, 180, 252, 0.3);
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            font-size: 1.25rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .ranking-container {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 25px;
-            border-radius: 20px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .ranking-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 10px;
-            text-align: left;
-        }
-        .ranking-table th {
-            padding: 12px 20px;
-            color: #94a3b8;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 2px solid rgba(255,255,255,0.05);
-        }
-        .ranking-row {
-            background: rgba(255,255,255,0.03);
-            transition: all 0.3s ease;
-        }
-        .ranking-row:hover {
-            background: rgba(255,255,255,0.07);
-            transform: scale(1.01);
-        }
-        .ranking-row td {
-            padding: 15px 20px;
-            font-weight: 600;
-        }
-        .ranking-row td:first-child {
-            border-top-left-radius: 12px;
-            border-bottom-left-radius: 12px;
-        }
-        .ranking-row td:last-child {
-            border-top-right-radius: 12px;
-            border-bottom-right-radius: 12px;
-        }
 
-        /* Student Grid */
         .button-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
+            gap: 18px;
         }
+
         .student-btn {
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 20px;
-            border-radius: 16px;
+            padding: 18px;
+            border-radius: 12px;
             cursor: pointer;
             text-align: left;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #f1f5f9;
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 100px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
         }
-        .student-btn:hover {
-            transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        
-        body.add-mode .student-btn:hover { border-color: #10b981; box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
-        body.subtract-mode .student-btn:hover { border-color: #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.2); }
 
-        .student-btn .team-badge {
+        .student-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: transparent;
+            transition: background-color 0.25s;
+        }
+
+        .student-name {
+            color: #e2e8f0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            letter-spacing: 0.3px;
+        }
+
+        .team-badge {
             align-self: flex-start;
-            font-size: 0.75rem;
-            padding: 5px 12px;
+            font-size: 0.7rem;
+            padding: 4px 10px;
             border-radius: 20px;
-            margin-top: 15px;
-            font-weight: 700;
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            background: rgba(255,255,255,0.05);
+            color: #94a3b8;
+            border: 1px solid transparent;
         }
-    </style>
-    <link href="https://googleapis.com" rel="stylesheet">
-</head>
-<body class="add-mode">
 
-<div class="container">
-    <h1>🚀 Team Kuliah 12 - Scoring Dashboard 🚀</h1>
-    <a href="#" class="credit-link">by afikuza ✨</a>
+        /* Interactive Dynamic Hover styles matching individual teams */
+        .student-btn[data-team="1"]:hover { border-color: var(--neon-t1); box-shadow: 0 0 15px rgba(255, 0, 127, 0.25); transform: translateY(-3px); }
+        .student-btn[data-team="1"]::before { background: var(--neon-t1); }
+        .student-btn[data-team="1"]:hover .team-badge { color: var(--neon-t1); border-color: var(--neon-t1); background: rgba(255,0,127,0.1); }
 
-    <!-- Cumulative Scoreboard -->
-    <div class="scoreboard">
-        <div class="team-score-card t1" id="card-1"><h3>🔴 Team 1</h3><p class="score" id="score-1">0</p></div>
-        <div class="team-score-card t2" id="card-2"><h3>🟢 Team 2</h3><p class="score" id="score-2">0</p></div>
-        <div class="team-score-card t3" id="card-3"><h3>🔵 Team 3</h3><p class="score" id="score-3">0</p></div>
-        <div class="team-score-card t4" id="card-4"><h3>🟠 Team 4</h3><p class="score" id="score-4">0</p></div>
-        <div class="team-score-card t5" id="card-5"><h3>🟡 Team 5</h3><p class="score" id="score-5">0</p></div>
+        .student-btn[data-team="2"]:hover { border-color: var(--neon-t2); box-shadow: 0 0 15px rgba(0, 255, 102, 0.25); transform: translateY(-3px); }
+        .student-btn[data-team="2"]::before { background: var(--neon-t2); }
+        .student-btn[data-team="2"]:hover .team-badge { color: var(--neon-t2); border-color: var(--neon-t2); background: rgba(0,255,102,0.1); }
+
+        .student-btn[data-team="3"]:hover { border-color: var(--neon-t3); box-shadow: 0 0 15px rgba(255, 51, 51, 0.25); transform: translateY(-3px); }
+        .student-btn[data-team="3"]::before { background: var(--neon-t3); }
+        .student-btn[data-team="3"]:hover .team-badge { color: var(--neon-t3); border-color: var(--neon-t3); background: rgba(255,51,51,0.1); }
+
+        .student-btn[data-team="4"]:hover { border-color: var(--neon-t4); box-shadow: 0 0 15px rgba(255, 153, 0, 0.25); transform: translateY(-3px); }
+        .student-btn[data-team="4"]::before { background: var(--neon-t4); }
+        .student-btn[data-team="4"]:hover .team-badge { color: var(--neon-t4); border-color: var(--neon-t4); background: rgba(255,153,0,0.1); }
+
+        .student-btn[data-team="5"]:hover { border-color: var(--neon-t5); box-shadow: 0 0 15px rgba(0, 255, 255, 0.25); transform: translateY(-3px); }
+        .student-btn[data-team="5"]::before { background: var(--neon-t5); }
+        .student-btn[data-team="5"]:hover .team-badge { color: var(--neon-t5); border-color: var(--neon-t5); background: rgba(0,255,255,0.1); }
+
+        .student-btn[data-team="6"]:hover { border-color: var(--neon-t6); box-shadow: 0 0 15px rgba(153, 51, 255, 0.25); transform: translateY(-3px); }
+        .student-btn[data-team="6"]::before { background: var(--neon-t6); }
+        .student-btn[data-team="6"]:hover .team-badge { color: var(--neon-t6); border-color: var(--neon-t6); background: rgba(153,51,255,0.1); }
+
+        .student-btn[data-team="7"]:hover { border-color: var(--neon-t7); box-shadow: 0 0 15px rgba(255, 255, 0, 0.25); transform: translateY(-3px); }
+        .student-btn[data-team="7"]::before { background: var(--neon-t7); }
