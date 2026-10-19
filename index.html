@@ -43,7 +43,7 @@
             margin-bottom: 30px;
         }
 
-        /* Scoreboard Grid */
+        /* Scoreboard Grid Grid */
         .scoreboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -84,7 +84,7 @@
             font-weight: 700;
         }
 
-        /* Glow themes for teams */
+        /* Color configurations for individual teams */
         .t1 { border-color: var(--neon-t1); box-shadow: 0 0 15px rgba(255, 0, 127, 0.2), inset 0 0 15px rgba(255, 0, 127, 0.1); }
         .t1 .score { color: var(--neon-t1); text-shadow: 0 0 10px rgba(255, 0, 127, 0.5); }
         
@@ -100,16 +100,16 @@
         .t5 { border-color: var(--neon-t5); box-shadow: 0 0 15px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.1); }
         .t5 .score { color: var(--neon-t5); text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
 
-        .t6 { border-color: var(--neon-purple); border-color: var(--neon-t6); box-shadow: 0 0 15px rgba(153, 51, 255, 0.2), inset 0 0 15px rgba(153, 51, 255, 0.1); }
+        .t6 { border-color: var(--neon-t6); box-shadow: 0 0 15px rgba(153, 51, 255, 0.2), inset 0 0 15px rgba(153, 51, 255, 0.1); }
         .t6 .score { color: var(--neon-t6); text-shadow: 0 0 10px rgba(153, 51, 255, 0.5); }
 
-        .t7 { border-color: var(--neon-t7); box-shadow: 0 0 15px rgba(2ffff, 0, 0.2), inset 0 0 15px rgba(255, 255, 0, 0.1); }
+        .t7 { border-color: var(--neon-t7); box-shadow: 0 0 15px rgba(255, 255, 0, 0.2), inset 0 0 15px rgba(255, 255, 0, 0.1); }
         .t7 .score { color: var(--neon-t7); text-shadow: 0 0 10px rgba(255, 255, 0, 0.5); }
 
         .t8 { border-color: var(--neon-t8); box-shadow: 0 0 15px rgba(255, 255, 255, 0.1), inset 0 0 15px rgba(255, 255, 255, 0.05); }
         .t8 .score { color: var(--neon-t8); text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
 
-        /* Scoring Flash Animation */
+        /* Haptic Bump Visual Effect */
         @keyframes flash-bump {
             0% { transform: scale(1); }
             50% { transform: scale(1.12); filter: brightness(1.5); }
@@ -117,7 +117,7 @@
         }
         .bump { animation: flash-bump 0.4s ease-out; }
 
-        /* Action Panel */
+        /* Action Control Panel */
         .action-panel {
             text-align: right;
             margin-bottom: 25px;
@@ -142,7 +142,7 @@
             transform: translateY(-2px);
         }
 
-        /* Buttons Section */
+        /* Buttons Structure */
         .grid-title {
             color: #a5b4fc;
             border-bottom: 1px dashed rgba(165, 180, 252, 0.3);
@@ -205,7 +205,7 @@
             border: 1px solid transparent;
         }
 
-        /* Interactive Dynamic Hover styles matching individual teams */
+        /* Responsive styling mappings for dynamic mouse hovering highlights */
         .student-btn[data-team="1"]:hover { border-color: var(--neon-t1); box-shadow: 0 0 15px rgba(255, 0, 127, 0.25); transform: translateY(-3px); }
         .student-btn[data-team="1"]::before { background: var(--neon-t1); }
         .student-btn[data-team="1"]:hover .team-badge { color: var(--neon-t1); border-color: var(--neon-t1); background: rgba(255,0,127,0.1); }
