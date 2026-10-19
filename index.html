@@ -1,305 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Scoring System - Kuliah 12</title>
-    <!-- Confetti library for high-engagement victory bursts -->
-    <script src="https://jsdelivr.net"></script>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            text-align: center;
-            color: #7f8c8d;
-            margin-top: 0;
-            margin-bottom: 30px;
-            font-size: 1rem;
-        }
-        
-        /* Scoreboard Grid Styling */
-        .scoreboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .team-score-card {
-            text-align: center;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            color: #fff;
-            box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
-            transition: transform 0.2s;
-        }
-        .team-score-card:hover {
-            transform: translateY(-2px);
-        }
-        .team-score-card h3 {
-            margin: 0 0 10px 0;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .team-score-card .score {
-            font-size: 2rem;
-            margin: 0;
-            font-family: monospace;
-        }
-        
-        /* Authentic Team Colors from Document Context */
-        .t1 { background-color: #d1a3d1; color: #4a144a !important; }
-        .t2 { background-color: #2ecc71; color: #0f4021 !important; }
-        .t3 { background-color: #e74c3c; color: #56140d !important; }
-        .t4 { background-color: #ffaa66; color: #5c3008 !important; }
-        .t5 { background-color: #3498db; color: #0f3652 !important; }
-        .t6 { background-color: #95a5a6; color: #2c3e50 !important; }
-        .t7 { background-color: #f1c40f; color: #544403 !important; }
-        .t8 { background-color: #bdc3c7; color: #2c3e50 !important; }
-
-        /* Mode & Action Control Panels Layout */
-        .control-panel {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 25px;
-            background: #fff;
-            padding: 15px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .mode-toggle {
-            display: flex;
-            background: #eee;
-            padding: 4px;
-            border-radius: 8px;
-            gap: 4px;
-        }
-        .btn-mode {
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
-        }
-        .btn-mode.active-add {
-            background-color: #2ecc71;
-            color: white;
-        }
-        .btn-mode.active-deduct {
-            background-color: #e74c3c;
-            color: white;
-        }
-        .btn-mode:not(.active-add):not(.active-deduct) {
-            background: transparent;
-            color: #666;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        .btn-action {
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
-        }
-        .btn-end {
-            background-color: #34495e;
-        }
-        .btn-end:hover {
-            background-color: #2c3e50;
-            transform: translateY(-1px);
-        }
-        .btn-reset {
-            background-color: #95a5a6;
-        }
-        .btn-reset:hover {
-            background-color: #7f8c8d;
-        }
-
-        /* Interactive Grid Panels */
-        .grid-title {
-            color: #2c3e50;
-            border-bottom: 2px solid #bdc3c7;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 1.25rem;
-        }
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 15px;
-        }
-        .student-btn {
-            background: white;
-            border: 2px solid #e2e8f0;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            user-select: none;
-        }
-        .student-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.06);
-        }
-        .student-btn:active {
-            transform: translateY(0);
-        }
-        .student-name {
-            font-weight: 700;
-            color: #2c3e50;
-            line-height: 1.3;
-            margin-bottom: 8px;
-        }
-        .student-btn .team-badge {
-            align-self: flex-start;
-            font-size: 0.7rem;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Floating Score Click Animation Elements */
-        .score-splash {
-            position: fixed;
-            font-weight: 900;
-            font-size: 1.5rem;
-            pointer-events: none;
-            z-index: 1000;
-            animation: floatUp 0.6s ease-out forwards;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(0.8); opacity: 1; }
-            100% { transform: translateY(-40px) scale(1.2); opacity: 0; }
-        }
-
-        /* Final Rankings Modal Window Overlay Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(44, 62, 80, 0.85);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .modal-card {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            text-align: center;
-            transform: translateY(-20px);
-            transition: transform 0.3s ease;
-        }
-        .modal-overlay.active .modal-card {
-            transform: translateY(0);
-        }
-        .modal-card h2 {
-            margin-top: 0;
-            color: #2c3e50;
-            font-size: 1.8rem;
-        }
-        .rankings-list {
-            margin: 20px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .rank-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-        }
-        .rank-position {
-            background: rgba(255,255,255,0.3);
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-        }
-        .btn-close-modal {
-            background-color: #34495e;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-            font-size: 0.95rem;
-        }
-        .btn-close-modal:hover {
-            background-color: #2c3e50;
-        }
-    </style>
-</head>
 <body>
 
 <div class="container">
     <h1>Team Kuliah 12 - Scoring Dashboard</h1>
-    <p class="subtitle">Click a name card below to instantly modify their constituent team's point score.</p>
+    <div style="text-align: center; margin-top: -25px; margin-bottom: 30px; font-style: italic; color: #7f8c8d; font-weight: 500;">by afikuza</div>
 
-    <!-- Cumulative Scoreboard View -->
+    <!-- Cumulative Scoreboard -->
     <div class="scoreboard">
         <div class="team-score-card t1"><h3>Team 1</h3><p class="score" id="score-1">0</p></div>
         <div class="team-score-card t2"><h3>Team 2</h3><p class="score" id="score-2">0</p></div>
@@ -311,3 +16,186 @@
         <div class="team-score-card t8"><h3>Team 8</h3><p class="score" id="score-8">0</p></div>
     </div>
 
+    <!-- Control Action Panel -->
+    <div class="action-panel" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+        <div>
+            <span style="font-weight: bold; margin-right: 10px;">Action Mode:</span>
+            <label style="cursor: pointer; margin-right: 15px; font-weight: 600; color: #2ecc71;">
+                <input type="radio" name="scoreMode" value="add" checked onchange="toggleMode(this.value)"> + Add Point
+            </label>
+            <label style="cursor: pointer; font-weight: 600; color: #e74c3c;">
+                <input type="radio" name="scoreMode" value="subtract" onchange="toggleMode(this.value)"> - Deduct Point
+            </label>
+        </div>
+        <button class="btn-reset" onclick="resetScores()">Reset All Scores</button>
+    </div>
+
+    <!-- Dynamic Leaderboard Standings -->
+    <h2 class="grid-title">🏆 Live Team Standings</h2>
+    <div id="ranking-container" style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="border-bottom: 2px solid #ecf0f1; color: #7f8c8d; font-size: 0.9rem;">
+                    <th style="padding: 10px;">Rank</th>
+                    <th style="padding: 10px;">Team</th>
+                    <th style="padding: 10px; text-align: right;">Total Score</th>
+                </tr>
+            </thead>
+            <tbody id="ranking-table-body">
+                <!-- Injected via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Student Buttons Menu -->
+    <h2 class="grid-title">Click a name to update their team score:</h2>
+    <div class="button-grid" id="buttons-container"></div>
+</div>
+
+<script>
+    // List of students mapped precisely to their team numbers from the document
+    const students = [
+        { name: "NOR AMIRA BALQIS BINTI ABU SAMAH", team: 1 },
+        { name: "KELLY NEOH", team: 1 },
+        { name: "AYUMI NUR ARIESYA BINTI NORHISHAM", team: 1 },
+        { name: "NURUL IZZATI FAQIHAH BINTI MOHD NAZARIEE", team: 2 },
+        { name: "NUR QURRATUL QAISARA BINTI ZULKEFELY", team: 2 },
+        { name: "AMIRA DAMIA BINTI AZIZUL", team: 3 },
+        { name: "MARISSA KHADEEJA BINTI MOHD KHUSAIRI", team: 3 },
+        { name: "MUHAMMAD AQIL HAZIQ BIN MOHD NAZIR", team: 3 },
+        { name: "HANG JUN SEN", team: 3 },
+        { name: "NUR HANNAN HUSAINI BINTI HASSANNUDDIN", team: 4 },
+        { name: "QASIH FARISHA BINTI MOHD FARIS", team: 4 },
+        { name: "WAN MUHAMMAD FARIS BIN MOHD RIDZAL", team: 5 },
+        { name: "NURIN SYAHINDAH BINTI MOHD FAIZAL", team: 1 },
+        { name: "MUHAMMAD HAZIM BIN MOHD ZAHARI", team: 1 },
+        { name: "MUHAMMAD AIMAN BIN ABDUL WAHID", team: 1 },
+        { name: "MUHAMMAD YUSUF BIN ROSDIADI", team: 2 },
+        { name: "MUHAMMAD MURSYID BIN ABDUL RAZAK", team: 2 },
+        { name: "SITI DHIA TIHANI BINTI MOHD WIRA", team: 6 },
+        { name: "AHMAD ALIMI ADLI BIN ABDUL AZIZ", team: 6 },
+        { name: "HANA MAISARAH BINTI ILYAS", team: 5 },
+        { name: "LEE XU YANG", team: 5 },
+        { name: "TAZMEEN RUKHSANA BINTI TAJMUL RIZWAN", team: 7 },
+        { name: "MUHAMAD AFIQ ZAFRI BIN MOHD ZAMAN", team: 7 },
+        { name: "MUHAMMAD FARHANNUDIN BIN MOHAMMAD NOR AZIZ", team: 7 },
+        { name: "AINUL AIFFA ATHIRAH BINTI ZULKIFLI", team: 8 },
+        { name: "BADRUL HAZIQ HAKIMI BIN BAKHTIAR", team: 8 },
+        { name: "NUR AMIRAH BINTI ADNAN", team: 8 },
+        { name: "RIZQ HAIKAL BIN REIME", team: 4 },
+        { name: "TAN JUN YUAN", team: 4 },
+        { name: "TEE ZHI XUAN", team: 2 },
+        { name: "QASRINA ZAHRA BINTI ZAFARIS", team: 6 },
+        { name: "WONG YOKE TENG", team: 6 },
+        { name: "CHOONG CHEOK HAN", team: 8 },
+        { name: "JIVHANTIKA A/P SHANMUGANATHAN", team: 7 }
+    ];
+
+    // Initialize team scores from localStorage or default to 0
+    let scores = JSON.parse(localStorage.getItem('teamScores')) || {
+        1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0
+    };
+
+    // Tracks current scoring operation mode ('add' or 'subtract')
+    let currentMode = 'add';
+
+    function toggleMode(mode) {
+        currentMode = mode;
+        const buttons = document.querySelectorAll('.student-btn');
+        buttons.forEach(btn => {
+            if (mode === 'subtract') {
+                btn.style.borderColor = '#e74c3c';
+            } else {
+                btn.style.borderColor = '#e2e8f0';
+            }
+        });
+    }
+
+    // Handles live updates to scoreboard panels and ranking ledger
+    function updateScoreboardUI() {
+        // Update top grid dashboard widgets
+        for (let teamId in scores) {
+            document.getElementById(`score-${teamId}`).innerText = scores[teamId];
+        }
+        renderLeaderboard();
+    }
+
+    // Process points updates dynamically based on mode configuration 
+    function updateScore(teamId) {
+        if (currentMode === 'add') {
+            scores[teamId] += 1;
+        } else {
+            // Avoid drop below 0 if you prefer strictly positive metrics
+            scores[teamId] = Math.max(0, scores[teamId] - 1);
+        }
+        localStorage.setItem('teamScores', JSON.stringify(scores));
+        updateScoreboardUI();
+    }
+
+    // Render sorted rankings from highest to lowest score
+    function renderLeaderboard() {
+        const tbody = document.getElementById('ranking-table-body');
+        tbody.innerHTML = '';
+
+        // Transform object data map into real array list structures for functional sorting
+        const rankedTeams = Object.keys(scores).map(teamId => {
+            return { id: teamId, score: scores[teamId] };
+        }).sort((a, b) => b.score - a.score);
+
+        rankedTeams.forEach((team, index) => {
+            const tr = document.createElement('tr');
+            tr.style.borderBottom = '1px solid #f1c40f20';
+            tr.style.height = '45px';
+            
+            // Add a subtle crown style identifier for current leaders
+            const rankBadge = index === 0 && team.score > 0 ? '🥇 1st' : 
+                              index === 1 && team.score > 0 ? '🥈 2nd' : 
+                              index === 2 && team.score > 0 ? '🥉 3rd' : `${index + 1}`;
+
+            tr.innerHTML = `
+                <td style="padding: 10px; font-weight: bold;">${rankBadge}</td>
+                <td style="padding: 10px;"><span class="team-badge t${team.id}">Team ${team.id}</span></td>
+                <td style="padding: 10px; text-align: right; font-weight: bold; font-size: 1.1rem;">${team.score}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // Reset scores function
+    function resetScores() {
+        if(confirm("Are you sure you want to reset all team marks back to zero?")) {
+            scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
+            localStorage.setItem('teamScores', JSON.stringify(scores));
+            updateScoreboardUI();
+        }
+    }
+
+    // Generate the button grid for students sorted alphabetically by name
+    function renderStudentButtons() {
+        const container = document.getElementById('buttons-container');
+        container.innerHTML = ''; 
+
+        const sortedStudents = [...students].sort((a, b) => a.name.localeCompare(b.name));
+
+        sortedStudents.forEach(student => {
+            const button = document.createElement('button');
+            button.className = 'student-btn';
+            button.onclick = () => updateScore(student.team);
+
+            button.innerHTML = `
+                <span>${student.name}</span>
+                <span class="team-badge t${student.team}">Team ${student.team}</span>
+            `;
+
+            container.appendChild(button);
+        });
+    }
+
+    // Run initialization logic when the page loads
+    window.onload = function() {
+        updateScoreboardUI();
+        renderStudentButtons();
+    };
+</script>
+</body>
+</html>
