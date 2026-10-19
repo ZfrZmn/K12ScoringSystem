@@ -3,232 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Scoring System - Kuliah 12 🚀</title>
+    <title>Team Scoring System - Kuliah 12</title>
     <style>
-        :root {
-            --bg-dark: #0a0e17;
-            --card-bg: #121824;
-            --neon-t1: #ff007f; /* Neon Pink */
-            --neon-t2: #00ff66; /* Neon Green */
-            --neon-t3: #ff3333; /* Neon Red */
-            --neon-t4: #ff9900; /* Neon Orange */
-            --neon-t5: #00ffff; /* Neon Cyan */
-            --neon-t6: #9933ff; /* Neon Purple */
-            --neon-t7: #ffff00; /* Neon Yellow */
-            --neon-t8: #ffffff; /* Neon White */
-        }
-
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 50% 50%, #1a233a 0%, var(--bg-dark) 80%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
             margin: 0;
             padding: 20px;
-            color: #f0f4f8;
-            min-height: 100vh;
+            color: #333;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-
         h1 {
             text-align: center;
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.2);
+            color: #2c3e50;
             margin-bottom: 30px;
         }
-
-        /* Scoreboard Grid Grid */
+        /* Scoreboard Styling */
         .scoreboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
             margin-bottom: 40px;
-            background: rgba(18, 24, 36, 0.7);
-            padding: 25px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-
         .team-score-card {
             text-align: center;
-            padding: 20px 10px;
-            border-radius: 12px;
+            padding: 15px;
+            border-radius: 8px;
             font-weight: bold;
-            background: #161f30;
-            border: 2px solid transparent;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
+            color: #fff;
+            box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
         }
-
         .team-score-card h3 {
             margin: 0 0 10px 0;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #8fa0dd;
-        }
-
-        .team-score-card .score {
-            font-size: 2.5rem;
-            margin: 0;
-            font-family: monospace;
-            font-weight: 700;
-        }
-
-        /* Color configurations for individual teams */
-        .t1 { border-color: var(--neon-t1); box-shadow: 0 0 15px rgba(255, 0, 127, 0.2), inset 0 0 15px rgba(255, 0, 127, 0.1); }
-        .t1 .score { color: var(--neon-t1); text-shadow: 0 0 10px rgba(255, 0, 127, 0.5); }
-        
-        .t2 { border-color: var(--neon-t2); box-shadow: 0 0 15px rgba(0, 255, 102, 0.2), inset 0 0 15px rgba(0, 255, 102, 0.1); }
-        .t2 .score { color: var(--neon-t2); text-shadow: 0 0 10px rgba(0, 255, 102, 0.5); }
-
-        .t3 { border-color: var(--neon-t3); box-shadow: 0 0 15px rgba(255, 51, 51, 0.2), inset 0 0 15px rgba(255, 51, 51, 0.1); }
-        .t3 .score { color: var(--neon-t3); text-shadow: 0 0 10px rgba(255, 51, 51, 0.5); }
-
-        .t4 { border-color: var(--neon-t4); box-shadow: 0 0 15px rgba(255, 153, 0, 0.2), inset 0 0 15px rgba(255, 153, 0, 0.1); }
-        .t4 .score { color: var(--neon-t4); text-shadow: 0 0 10px rgba(255, 153, 0, 0.5); }
-
-        .t5 { border-color: var(--neon-t5); box-shadow: 0 0 15px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.1); }
-        .t5 .score { color: var(--neon-t5); text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
-
-        .t6 { border-color: var(--neon-t6); box-shadow: 0 0 15px rgba(153, 51, 255, 0.2), inset 0 0 15px rgba(153, 51, 255, 0.1); }
-        .t6 .score { color: var(--neon-t6); text-shadow: 0 0 10px rgba(153, 51, 255, 0.5); }
-
-        .t7 { border-color: var(--neon-t7); box-shadow: 0 0 15px rgba(255, 255, 0, 0.2), inset 0 0 15px rgba(255, 255, 0, 0.1); }
-        .t7 .score { color: var(--neon-t7); text-shadow: 0 0 10px rgba(255, 255, 0, 0.5); }
-
-        .t8 { border-color: var(--neon-t8); box-shadow: 0 0 15px rgba(255, 255, 255, 0.1), inset 0 0 15px rgba(255, 255, 255, 0.05); }
-        .t8 .score { color: var(--neon-t8); text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
-
-        /* Haptic Bump Visual Effect */
-        @keyframes flash-bump {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.12); filter: brightness(1.5); }
-            100% { transform: scale(1); }
-        }
-        .bump { animation: flash-bump 0.4s ease-out; }
-
-        /* Action Control Panel */
-        .action-panel {
-            text-align: right;
-            margin-bottom: 25px;
-        }
-        .btn-reset {
-            background-color: transparent;
-            color: #ff3333;
-            border: 2px solid #ff3333;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: all 0.2s ease;
-            box-shadow: 0 0 10px rgba(255, 51, 51, 0.2);
         }
-        .btn-reset:hover {
-            background-color: #ff3333;
-            color: #fff;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
-            transform: translateY(-2px);
+        .team-score-card .score {
+            font-size: 2rem;
+            margin: 0;
         }
+        /* Team Colors Based on Document */
+        .t1 { background-color: #d1a3d1; color: #4a144a !important; }
+        .t2 { background-color: #2ecc71; color: #0f4021 !important; }
+        .t3 { background-color: #e74c3c; color: #56140d !important; }
+        .t4 { background-color: #ffaa66; color: #5c3008 !important; }
+        .t5 { background-color: #3498db; color: #0f3652 !important; }
+        .t6 { background-color: #95a5a6; color: #2c3e50 !important; }
+        .t7 { background-color: #f1c40f; color: #544403 !important; }
+        .t8 { background-color: #bdc3c7; color: #2c3e50 !important; }
 
-        /* Buttons Structure */
+        /* Action Panel */
+        .action-panel {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .btn-reset {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn-reset:hover { background-color: #c0392b; }
+
+        /* Buttons Grid */
         .grid-title {
-            color: #a5b4fc;
-            border-bottom: 1px dashed rgba(165, 180, 252, 0.3);
-            padding-bottom: 12px;
-            margin-bottom: 25px;
-            font-size: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            color: #34495e;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
-
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
         }
-
         .student-btn {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 18px;
-            border-radius: 12px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
             cursor: pointer;
             text-align: left;
-            position: relative;
+            font-size: 0.85rem;
+            font-weight: 600;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-
-        .student-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: transparent;
-            transition: background-color 0.25s;
+        .student-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.08);
+            border-color: #3498db;
         }
-
-        .student-name {
-            color: #e2e8f0;
-            font-size: 0.85rem;
-            font-weight: 600;
-            line-height: 1.4;
-            margin-bottom: 12px;
-            letter-spacing: 0.3px;
+        .student-btn:active {
+            transform: translateY(0);
         }
-
-        .team-badge {
+        .student-btn .team-badge {
             align-self: flex-start;
             font-size: 0.7rem;
-            padding: 4px 10px;
-            border-radius: 20px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-top: 10px;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            background: rgba(255,255,255,0.05);
-            color: #94a3b8;
-            border: 1px solid transparent;
         }
+    </style>
+</head>
+<body>
 
-        /* Responsive styling mappings for dynamic mouse hovering highlights */
-        .student-btn[data-team="1"]:hover { border-color: var(--neon-t1); box-shadow: 0 0 15px rgba(255, 0, 127, 0.25); transform: translateY(-3px); }
-        .student-btn[data-team="1"]::before { background: var(--neon-t1); }
-        .student-btn[data-team="1"]:hover .team-badge { color: var(--neon-t1); border-color: var(--neon-t1); background: rgba(255,0,127,0.1); }
+<div class="container">
+    <h1>Team Kuliah 12 - Scoring Dashboard</h1>
 
-        .student-btn[data-team="2"]:hover { border-color: var(--neon-t2); box-shadow: 0 0 15px rgba(0, 255, 102, 0.25); transform: translateY(-3px); }
-        .student-btn[data-team="2"]::before { background: var(--neon-t2); }
-        .student-btn[data-team="2"]:hover .team-badge { color: var(--neon-t2); border-color: var(--neon-t2); background: rgba(0,255,102,0.1); }
+    <!-- Cumulative Scoreboard -->
+    <div class="scoreboard">
+        <div class="team-score-card t1"><h3>Team 1</h3><p class="score" id="score-1">0</p></div>
+        <div class="team-score-card t2"><h3>Team 2</h3><p class="score" id="score-2">0</p></div>
+        <div class="team-score-card t3"><h3>Team 3</h3><p class="score" id="score-3">0</p></div>
+        <div class="team-score-card t4"><h3>Team 4</h3><p class="score" id="score-4">0</p></div>
+        <div class="team-score-card t5"><h3>Team 5</h3><p class="score" id="score-5">0</p></div>
+        <div class="team-score-card t6"><h3>Team 6</h3><p class="score" id="score-6">0</p></div>
+        <div class="team-score-card t7"><h3>Team 7</h3><p class="score" id="score-7">0</p></div>
+        <div class="team-score-card t8"><h3>Team 8</h3><p class="score" id="score-8">0</p></div>
+    </div>
 
-        .student-btn[data-team="3"]:hover { border-color: var(--neon-t3); box-shadow: 0 0 15px rgba(255, 51, 51, 0.25); transform: translateY(-3px); }
-        .student-btn[data-team="3"]::before { background: var(--neon-t3); }
-        .student-btn[data-team="3"]:hover .team-badge { color: var(--neon-t3); border-color: var(--neon-t3); background: rgba(255,51,51,0.1); }
+    <div class="action-panel">
+        <button class="btn-reset" onclick="resetScores()">Reset All Scores</button>
+    </div>
 
-        .student-btn[data-team="4"]:hover { border-color: var(--neon-t4); box-shadow: 0 0 15px rgba(255, 153, 0, 0.25); transform: translateY(-3px); }
-        .student-btn[data-team="4"]::before { background: var(--neon-t4); }
-        .student-btn[data-team="4"]:hover .team-badge { color: var(--neon-t4); border-color: var(--neon-t4); background: rgba(255,153,0,0.1); }
+    <!-- Student Buttons Menu -->
+    <h2 class="grid-title">Click a name to add +1 point to their team:</h2>
+    <div class="button-grid" id="buttons-container"></div>
+</div>
 
-        .student-btn[data-team="5"]:hover { border-color: var(--neon-t5); box-shadow: 0 0 15px rgba(0, 255, 255, 0.25); transform: translateY(-3px); }
-        .student-btn[data-team="5"]::before { background: var(--neon-t5); }
-        .student-btn[data-team="5"]:hover .team-badge { color: var(--neon-t5); border-color: var(--neon-t5); background: rgba(0,255,255,0.1); }
+<script>
+    // List of students mapped precisely to their team numbers from the document
+    const students = [
+        { name: "NOR AMIRA BALQIS BINTI ABU SAMAH", team: 1 },
+        { name: "KELLY NEOH", team: 1 },
+        { name: "AYUMI NUR ARIESYA BINTI NORHISHAM", team: 1 },
+        { name: "NURUL IZZATI FAQIHAH BINTI MOHD NAZARIEE", team: 2 },
+        { name: "NUR QURRATUL QAISARA BINTI ZULKEFELY", team: 2 },
+        { name: "AMIRA DAMIA BINTI AZIZUL", team: 3 },
+        { name: "MARISSA KHADEEJA BINTI MOHD KHUSAIRI", team: 3 },
+        { name: "MUHAMMAD AQIL HAZIQ BIN MOHD NAZIR", team: 3 },
+        { name: "HANG JUN SEN", team: 3 },
+        { name: "NUR HANNAN HUSAINI BINTI HASSANNUDDIN", team: 4 },
+        { name: "QASIH FARISHA BINTI MOHD FARIS", team: 4 },
+        { name: "WAN MUHAMMAD FARIS BIN MOHD RIDZAL", team: 5 },
+        { name: "NURIN SYAHINDAH BINTI MOHD FAIZAL", team: 1 },
+        { name: "MUHAMMAD HAZIM BIN MOHD ZAHARI", team: 1 },
+        { name: "MUHAMMAD AIMAN BIN ABDUL WAHID", team: 1 },
+        { name: "MUHAMMAD YUSUF BIN ROSDIADI", team: 2 },
+        { name: "MUHAMMAD MURSYID BIN ABDUL RAZAK", team: 2 },
+        { name: "SITI DHIA TIHANI BINTI MOHD WIRA", team: 6 },
+        { name: "AHMAD ALIMI ADLI BIN ABDUL AZIZ", team: 6 },
+        { name: "HANA MAISARAH BINTI ILYAS", team: 5 },
+        { name: "LEE XU YANG", team: 5 },
+        { name: "TAZMEEN RUKHSANA BINTI TAJMUL RIZWAN", team: 7 },
+        { name: "MUHAMAD AFIQ ZAFRI BIN MOHD ZAMAN", team: 7 },
+        { name: "MUHAMMAD FARHANNUDIN BIN MOHAMMAD NOR AZIZ", team: 7 },
+        { name: "AINUL AIFFA ATHIRAH BINTI ZULKIFLI", team: 8 },
+        { name: "BADRUL HAZIQ HAKIMI BIN BAKHTIAR", team: 8 },
+        { name: "NUR AMIRAH BINTI ADNAN", team: 8 },
+        { name: "RIZQ HAIKAL BIN REIME", team: 4 },
+        { name: "TAN JUN YUAN", team: 4 },
+        { name: "TEE ZHI XUAN", team: 2 },
+        { name: "QASRINA ZAHRA BINTI ZAFARIS", team: 6 },
+        { name: "WONG YOKE TENG", team: 6 },
+        { name: "CHOONG CHEOK HAN", team: 8 },
+        { name: "JIVHANTIKA A/P SHANMUGANATHAN", team: 7 }
+    ];
 
-        .student-btn[data-team="6"]:hover { border-color: var(--neon-t6); box-shadow: 0 0 15px rgba(153, 51, 255, 0.25); transform: translateY(-3px); }
-        .student-btn[data-team="6"]::before { background: var(--neon-t6); }
-        .student-btn[data-team="6"]:hover .team-badge { color: var(--neon-t6); border-color: var(--neon-t6); background: rgba(153,51,255,0.1); }
+    // Initialize team scores from localStorage or default to 0
+    let scores = JSON.parse(localStorage.getItem('teamScores')) || {
+        1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0
+    };
 
-        .student-btn[data-team="7"]:hover { border-color: var(--neon-t7); box-shadow: 0 0 15px rgba(255, 255, 0, 0.25); transform: translateY(-3px); }
-        .student-btn[data-team="7"]::before { background: var(--neon-t7); }
+    // Update the UI on startup
+    function updateScoreboardUI() {
+        for (let teamId in scores) {
+            document.getElementById(`score-${teamId}`).innerText = scores[teamId];
+        }
+    }
+
+    // Add point function
+    function addPoint(teamId) {
+        scores[teamId] += 1;
+        localStorage.setItem('teamScores', JSON.stringify(scores));
+        updateScoreboardUI();
+    }
+
+    // Reset scores function
+    function resetScores() {
+        if(confirm("Are you sure you want to reset all team marks back to zero?")) {
+            scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
+            localStorage.setItem('teamScores', JSON.stringify(scores));
+            updateScoreboardUI();
+        }
+    }
+
+    // Generate Name Buttons into Grid
+    const container = document.getElementById('buttons-container');
+    students.forEach(student => {
+        const btn = document.createElement('button');
+        btn.className = 'student-btn';
+        btn.onclick = () => addPoint(student.team);
+        
+        btn.innerHTML = `
+            <span>${student.name}</span>
+            <span class="team-badge t${student.team}">Team ${student.team}</span>
+        `;
+        container.appendChild(btn);
+    });
+
+    // Run initial UI updates
+    updateScoreboardUI();
+</script>
+
+</body>
+</html>
